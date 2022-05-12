@@ -14,7 +14,21 @@ class InboxChats extends StatefulWidget {
 class _InboxChatsState extends State<InboxChats> {
   @override
   Widget build(BuildContext context) {
-    final assets = [Image(image: AssetImage('assets/${widget.user.avatar}'))];
+    final assets = [Image(image: NetworkImage(widget.user.avatar))];
+
+    void onSelected(BuildContext context, int item) {
+      switch (item) {
+        case 0:
+          //print("Print clicked settings");
+          break;
+        case 1:
+          //print("Print clicked share");
+          break;
+        case 2:
+          break;
+      }
+    }
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: const Color.fromARGB(255, 161, 161, 161),
@@ -28,7 +42,7 @@ class _InboxChatsState extends State<InboxChats> {
                 ).show();
               }),
               child: CircleAvatar(
-                backgroundImage: AssetImage("assets/${widget.user.avatar}"),
+                backgroundImage: NetworkImage(widget.user.avatar),
               ),
             ),
             const SizedBox(
@@ -60,7 +74,75 @@ class _InboxChatsState extends State<InboxChats> {
         actions: [
           IconButton(onPressed: () {}, icon: const Icon(Icons.videocam)),
           IconButton(onPressed: () {}, icon: const Icon(Icons.call)),
-          IconButton(onPressed: () {}, icon: const Icon(Icons.more_vert)),
+          Theme(
+            data: Theme.of(context).copyWith(
+                iconTheme: const IconThemeData(color: Colors.white),
+                dividerColor: Colors.white,
+                textTheme: const TextTheme().apply(bodyColor: Colors.white)),
+            child: PopupMenuButton<int>(
+              color: const Color(0xffecb22e),
+              icon: const Icon(Icons.more_vert),
+              onSelected: (item) => onSelected(context, item),
+              itemBuilder: (context) => [
+                PopupMenuItem<int>(
+                    value: 0,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.person_rounded),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Profile"),
+                      ],
+                    )),
+                PopupMenuItem<int>(
+                    value: 1,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.face),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Hire me"),
+                      ],
+                    )),
+                PopupMenuItem<int>(
+                    value: 2,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.notifications),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Notifications"),
+                      ],
+                    )),
+                PopupMenuItem<int>(
+                    value: 3,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.wifi_protected_setup),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Progress"),
+                      ],
+                    )),
+                const PopupMenuDivider(),
+                PopupMenuItem<int>(
+                    value: 4,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.exit_to_app),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Quit"),
+                      ],
+                    )),
+              ],
+            ),
+          ),
         ],
       ),
       body: Container(

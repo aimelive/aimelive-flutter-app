@@ -1,3 +1,4 @@
+import 'package:aimelive_app/screens/user-app/screen_wrapper.dart';
 import 'package:aimelive_app/services/auth.dart';
 import 'package:aimelive_app/shared/loading.dart';
 import 'package:flutter/cupertino.dart';
@@ -111,6 +112,11 @@ class _SignUpState extends State<SignUp> {
                               error = "User Created!";
                               isLoading = false;
                             });
+                            Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                    builder: ((context) =>
+                                        const ScreenWrapper())));
                           }
                         } else {
                           setState(() {

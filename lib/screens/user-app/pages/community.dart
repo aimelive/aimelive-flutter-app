@@ -1,6 +1,8 @@
 import 'package:aimelive_app/models/user_model.dart';
 import 'package:aimelive_app/screens/user-app/pages/inbox.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:swipe_image_gallery/swipe_image_gallery.dart';
 
 class Commmunity extends StatefulWidget {
@@ -156,7 +158,8 @@ class _CommunityListState extends State<CommunityList> {
         bio: "Network Engineer"),
   ];
   Widget userCard(user) {
-    final assets = [Image(image: AssetImage('assets/${user.avatar}'))];
+    final data = User.fromJson(user.data() as Map<String, dynamic>);
+    final assets = [Image(image: NetworkImage(data.avatar))];
     return Card(
       elevation: 1,
       color: Colors.white,
@@ -176,7 +179,7 @@ class _CommunityListState extends State<CommunityList> {
                     ).show();
                   }),
                   child: CircleAvatar(
-                    backgroundImage: AssetImage("assets/${user.avatar}"),
+                    backgroundImage: NetworkImage(data.avatar),
                     radius: 26,
                   ),
                 ),
@@ -187,7 +190,7 @@ class _CommunityListState extends State<CommunityList> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      user.fullName,
+                      data.fullName,
                       style: const TextStyle(
                           fontSize: 18, fontWeight: FontWeight.w600),
                     ),
@@ -195,7 +198,7 @@ class _CommunityListState extends State<CommunityList> {
                       height: 5,
                     ),
                     Text(
-                      "${user.bio}",
+                      data.bio,
                       style: const TextStyle(color: Colors.grey),
                     )
                   ],
@@ -207,7 +210,7 @@ class _CommunityListState extends State<CommunityList> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => InboxChats(user: user)));
+                        builder: (context) => InboxChats(user: data)));
               },
               icon: const Icon(
                 Icons.add_comment_sharp,
@@ -223,8 +226,12 @@ class _CommunityListState extends State<CommunityList> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: users.map((user) => userCard(user)).toList(),
-    );
+    final user = Provider.of<QuerySnapshot?>(context);
+    if (user?.docs != null) {
+      return Column(
+        children: user!.docs.map((userData) => userCard(userData)).toList(),
+      );
+    }
+    return Column();
   }
 }

@@ -1,10 +1,8 @@
-import 'package:aimelive_app/screens/user-app/pages/user_profile.dart';
+import 'package:aimelive_app/screens/home.dart';
+import 'package:aimelive_app/screens/user-app/pages/community.dart';
 import 'package:aimelive_app/services/auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:swipe_image_gallery/swipe_image_gallery.dart';
-import 'package:aimelive_app/services/database.dart';
-import 'package:provider/provider.dart';
 
 class AboutPage extends StatefulWidget {
   const AboutPage({Key? key}) : super(key: key);
@@ -20,6 +18,9 @@ class _AboutPageState extends State<AboutPage> {
     Image(image: AssetImage('assets/photo3.jpg')),
   ];
   final AuthService _auth = AuthService();
+
+  final double coverHeight = 150;
+  final double profileHeight = 140;
   @override
   Widget build(BuildContext context) {
     void onSelected(BuildContext context, int item) async {
@@ -32,141 +33,195 @@ class _AboutPageState extends State<AboutPage> {
           break;
         case 2:
           await _auth.logOut();
+          Navigator.pushAndRemoveUntil(
+              context,
+              MaterialPageRoute(builder: ((context) => const HomePage())),
+              (route) => false);
           break;
       }
     }
 
-    return StreamProvider<QuerySnapshot?>.value(
-      value: DatabaseService(uuid: null).userData,
-      initialData: null,
-      child: Scaffold(
-        body: CustomScrollView(
-          slivers: [
-            SliverAppBar(
-              expandedHeight: 200,
-              stretch: true,
-              // floating: true,
-              //centerTitle: false,
-              pinned: true,
-              backgroundColor: Colors.grey,
-              leading: const Icon(Icons.menu),
-              elevation: 0.0,
-              actions: [
-                Theme(
-                  data: Theme.of(context).copyWith(
-                      iconTheme: const IconThemeData(color: Colors.white),
-                      dividerColor: Colors.white,
-                      textTheme:
-                          const TextTheme().apply(bodyColor: Colors.white)),
-                  child: PopupMenuButton<int>(
-                    color: const Color(0xffecb22e),
-                    onSelected: (item) => onSelected(context, item),
-                    itemBuilder: (context) => [
-                      PopupMenuItem<int>(
-                          value: 0,
-                          child: Row(
-                            children: const [
-                              Icon(Icons.settings),
-                              SizedBox(
-                                width: 12,
-                              ),
-                              Text("Settings"),
-                            ],
-                          )),
-                      PopupMenuItem<int>(
-                          value: 1,
-                          child: Row(
-                            children: const [
-                              Icon(Icons.share),
-                              SizedBox(
-                                width: 12,
-                              ),
-                              Text("Share"),
-                            ],
-                          )),
-                      const PopupMenuDivider(),
-                      PopupMenuItem<int>(
-                          value: 2,
-                          child: Row(
-                            children: const [
-                              Icon(Icons.logout),
-                              SizedBox(
-                                width: 12,
-                              ),
-                              Text("Sign Out"),
-                            ],
-                          )),
-                    ],
+    final top = coverHeight - profileHeight / 2;
+    return Scaffold(
+      appBar: AppBar(
+        title: Row(
+          children: const [
+            CircleAvatar(
+              backgroundColor: Colors.amber,
+              backgroundImage: AssetImage("assets/photo2.jpg"),
+            ),
+            SizedBox(
+              width: 10,
+            ),
+            Text("Aimelive"),
+          ],
+        ),
+        backgroundColor: Colors.grey,
+        foregroundColor: Colors.white,
+        elevation: 0.0,
+        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+        actions: [
+          Theme(
+            data: Theme.of(context).copyWith(
+                iconTheme: const IconThemeData(color: Colors.white),
+                dividerColor: Colors.white,
+                textTheme: const TextTheme().apply(bodyColor: Colors.white)),
+            child: PopupMenuButton<int>(
+              color: const Color(0xffecb22e),
+              icon: const Icon(Icons.more_vert),
+              onSelected: (item) => onSelected(context, item),
+              itemBuilder: (context) => [
+                PopupMenuItem<int>(
+                    value: 0,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.settings),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Settings"),
+                      ],
+                    )),
+                PopupMenuItem<int>(
+                    value: 1,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.share),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Share"),
+                      ],
+                    )),
+                const PopupMenuDivider(),
+                PopupMenuItem<int>(
+                    value: 2,
+                    child: Row(
+                      children: const [
+                        Icon(Icons.logout),
+                        SizedBox(
+                          width: 12,
+                        ),
+                        Text("Sign Out"),
+                      ],
+                    )),
+              ],
+            ),
+          ),
+          const SizedBox(
+            width: 20,
+          )
+        ],
+      ),
+      body: ListView(children: [buildTop(top), buildContent()]),
+
+      //           const UserProfile()
+    );
+  }
+
+  Stack buildTop(double top) {
+    final bottom = profileHeight / 2;
+    return Stack(
+        clipBehavior: Clip.none,
+        alignment: Alignment.center,
+        children: [
+          Container(
+              margin: EdgeInsets.only(bottom: bottom),
+              child: buildCoverImage()),
+          Positioned(top: top, child: buildProfileImage())
+        ]);
+  }
+
+  Widget buildContent() => Container(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          children: [
+            const Text(
+              "Aime Ndayambaje",
+              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 18,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                OutlinedButton.icon(
+                  onPressed: () {
+                    SwipeImageGallery(
+                      context: context,
+                      children: assets,
+                    ).show();
+                  },
+                  icon: const Icon(Icons.camera_alt),
+                  label: const Text("View Photos"),
+                  style: ElevatedButton.styleFrom(
+                    side: const BorderSide(width: 2.0, color: Colors.grey),
+                    onPrimary: Colors.grey[700],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                   ),
                 ),
-                const SizedBox(
-                  width: 20,
-                )
-              ],
-              flexibleSpace: FlexibleSpaceBar(
-                background: Image.asset(
-                  "assets/photo1.jpg",
-                  fit: BoxFit.cover,
+                OutlinedButton.icon(
+                  icon: const Icon(Icons.edit),
+                  label: const Text("Profile"),
+                  onPressed: () => showModalBottomSheet(
+                    isScrollControlled: true,
+                    backgroundColor: Colors.transparent,
+                    shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(25),
+                    )),
+                    context: context,
+                    builder: (context) => buildSheet(),
+                  ),
+                  style: ElevatedButton.styleFrom(
+                    side: const BorderSide(width: 2.0, color: Colors.grey),
+                    onPrimary: Colors.grey[700],
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                  ),
                 ),
-                //collapseMode: CollapseMode.pin,
-                title: const Text("Aimelive"),
-                //centerTitle: false,
-                stretchModes: const <StretchMode>[
-                  StretchMode.zoomBackground,
-                  StretchMode.fadeTitle
+              ],
+            ),
+            const SizedBox(
+              height: 18,
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                children: const [
+                  Text("Discover more people"),
                 ],
               ),
             ),
-            SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  const Text(
-                    "Aime Ndayambaje",
-                    style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        ElevatedButton.icon(
-                            onPressed: () {
-                              SwipeImageGallery(
-                                context: context,
-                                children: assets,
-                              ).show();
-                            },
-                            icon: const Icon(Icons.camera_alt),
-                            label: const Text("View Photos")),
-                        const SizedBox(
-                          width: 20,
-                        ),
-                        ElevatedButton.icon(
-                            onPressed: () => showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  shape: const RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.vertical(
-                                    top: Radius.circular(25),
-                                  )),
-                                  context: context,
-                                  builder: (context) => buildSheet(),
-                                ),
-                            icon: const Icon(Icons.high_quality),
-                            label: const Text("Profile")),
-                      ],
-                    ),
-                  ),
-                  const Text("Discover more people"),
-                  const UserProfile()
-                ],
-              ),
-            )
+            const CommunityList()
           ],
         ),
-      ),
-    );
-  }
+      );
+  Widget buildCoverImage() => Container(
+        color: Colors.grey,
+        child: Image.asset(
+          "assets/code.jpeg",
+          width: double.infinity,
+          height: coverHeight,
+          fit: BoxFit.cover,
+        ),
+      );
+  Widget buildProfileImage() => Container(
+        padding: const EdgeInsets.all(5),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(100),
+        ),
+        child: CircleAvatar(
+          radius: profileHeight / 2,
+          backgroundColor: Colors.grey.shade800,
+          backgroundImage: const AssetImage("assets/Rectangle 21.png"),
+        ),
+      );
 
   Widget makedismissable({required Widget child}) => GestureDetector(
         behavior: HitTestBehavior.opaque,
@@ -192,31 +247,66 @@ class _AboutPageState extends State<AboutPage> {
               children: [
                 const CircleAvatar(
                   radius: 40,
-                  backgroundImage: AssetImage("assets/photo1.jpg"),
+                  backgroundImage: AssetImage("assets/Rectangle 21.png"),
+                ),
+                TextButton(onPressed: () {}, child: const Text("Upload Photo")),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  initialValue: "Aimelive",
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      labelText: "Username"),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const Center(
-                  child: Text(
-                    "Aimelive",
-                    style: TextStyle(fontSize: 28, fontWeight: FontWeight.bold),
-                  ),
+                TextFormField(
+                  initialValue: "Aime Ndayambaje",
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      labelText: "Full Name"),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
-                const Text(
-                  "Welcome here, I am a freelance developer with over 2 years of experience in the game",
-                  style: TextStyle(fontSize: 20),
+                TextFormField(
+                  initialValue: "Flutter King",
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      labelText: "Bio"),
+                ),
+                const SizedBox(
+                  height: 10,
+                ),
+                TextFormField(
+                  initialValue: "+567893645373",
+                  decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                      labelText: "Phone"),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 ElevatedButton(
                   onPressed: () {},
-                  child: const Text("Chat with me"),
-                )
+                  child: const Text("Update"),
+                ),
+                const Divider(
+                  height: 10,
+                  color: Colors.black,
+                ),
+                ElevatedButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: const Text("Cancel"),
+                ),
               ],
             ),
           ),

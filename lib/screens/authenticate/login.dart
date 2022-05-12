@@ -1,3 +1,4 @@
+import 'package:aimelive_app/screens/user-app/screen_wrapper.dart';
 import 'package:aimelive_app/services/auth.dart';
 import 'package:aimelive_app/shared/loading.dart';
 import 'package:flutter/material.dart';
@@ -207,12 +208,12 @@ class _LoginPaageState extends State<LoginPage> {
                                       setState(() {
                                         message = "Login Successfully";
                                         isLoading = false;
-                                        // Navigator.push(
-                                        //     context,
-                                        //     MaterialPageRoute(
-                                        //         builder: ((context) =>
-                                        //             const ScreenWrapper())));
                                       });
+                                      Navigator.pushReplacement(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: ((context) =>
+                                                  const ScreenWrapper())));
                                     }
                                   }
                                 },

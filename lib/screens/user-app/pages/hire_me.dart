@@ -1,3 +1,4 @@
+import 'package:aimelive_app/screens/user-app/shared/app_bar.dart';
 import 'package:flutter/material.dart';
 
 class HireMe extends StatefulWidget {
@@ -11,19 +12,7 @@ class _HireMeState extends State<HireMe> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: const Color.fromARGB(255, 161, 161, 161),
-        title: const Text('Hire Me'),
-        foregroundColor: Colors.white,
-        leading: const Icon(Icons.menu),
-        elevation: 0.0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_active),
-          )
-        ],
-      ),
+      appBar: myCustomAppBar("Hire me") as PreferredSizeWidget,
       body: Container(
         padding: const EdgeInsets.all(10),
         decoration: const BoxDecoration(
