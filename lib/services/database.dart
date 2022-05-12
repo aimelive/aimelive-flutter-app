@@ -34,4 +34,9 @@ class DatabaseService {
   Stream<QuerySnapshot> get userData {
     return userCollection.snapshots();
   }
+
+  //signed in user doc strean
+  Stream<DocumentSnapshot> get currentUserData {
+    return userCollection.doc(uuid).snapshots();
+  }
 }

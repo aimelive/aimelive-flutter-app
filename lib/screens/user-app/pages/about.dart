@@ -1,7 +1,12 @@
+import 'package:aimelive_app/models/app_user.dart';
 import 'package:aimelive_app/screens/home.dart';
 import 'package:aimelive_app/screens/user-app/pages/community.dart';
 import 'package:aimelive_app/services/auth.dart';
+import 'package:aimelive_app/services/database.dart';
+import 'package:aimelive_app/shared/loading.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:swipe_image_gallery/swipe_image_gallery.dart';
 
 class AboutPage extends StatefulWidget {
@@ -21,6 +26,7 @@ class _AboutPageState extends State<AboutPage> {
 
   final double coverHeight = 150;
   final double profileHeight = 140;
+
   @override
   Widget build(BuildContext context) {
     void onSelected(BuildContext context, int item) async {
@@ -232,84 +238,121 @@ class _AboutPageState extends State<AboutPage> {
         ),
       );
 
-  Widget buildSheet() => makedismissable(
-        child: DraggableScrollableSheet(
-          initialChildSize: 0.7,
-          minChildSize: 0.4,
-          maxChildSize: 0.8,
-          builder: (_, controller) => Container(
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
-            padding: const EdgeInsets.all(16),
-            child: ListView(
-              controller: controller,
-              children: [
-                const CircleAvatar(
-                  radius: 40,
-                  backgroundImage: AssetImage("assets/Rectangle 21.png"),
-                ),
-                TextButton(onPressed: () {}, child: const Text("Upload Photo")),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  initialValue: "Aimelive",
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      labelText: "Username"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  initialValue: "Aime Ndayambaje",
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      labelText: "Full Name"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  initialValue: "Flutter King",
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      labelText: "Bio"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                TextFormField(
-                  initialValue: "+567893645373",
-                  decoration: const InputDecoration(
-                      border: OutlineInputBorder(),
-                      contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
-                      labelText: "Phone"),
-                ),
-                const SizedBox(
-                  height: 10,
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("Update"),
-                ),
-                const Divider(
-                  height: 10,
-                  color: Colors.black,
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: const Text("Cancel"),
-                ),
-              ],
-            ),
-          ),
-        ),
-      );
+  Widget buildSheet() {
+    final user = Provider.of<AppUser?>(context);
+    return makedismissable(
+      child: DraggableScrollableSheet(
+        initialChildSize: 0.7,
+        minChildSize: 0.4,
+        maxChildSize: 0.8,
+        builder: (_, controller) => StreamBuilder<DocumentSnapshot>(
+            stream: DatabaseService(uuid: user?.uuid).currentUserData,
+            builder: (context, snapshot) {
+              if (snapshot.hasData) {
+                DocumentSnapshot? data = snapshot.data;
+                final userModelData = ActiveUser.fromJsonUser(
+                    data?.data() as Map<String, dynamic>, user!.uuid);
+
+                final TextEditingController _username =
+                    TextEditingController(text: userModelData.username);
+                final TextEditingController _fullName =
+                    TextEditingController(text: userModelData.fullName);
+                final TextEditingController _bio =
+                    TextEditingController(text: userModelData.bio);
+                final TextEditingController _phone =
+                    TextEditingController(text: userModelData.phone);
+
+                //print(userModelData.email);
+                return Container(
+                  decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius:
+                          BorderRadius.vertical(top: Radius.circular(25))),
+                  padding: const EdgeInsets.all(16),
+                  child: ListView(
+                    controller: controller,
+                    children: [
+                      CircleAvatar(
+                        radius: 40,
+                        backgroundImage: NetworkImage(userModelData.avatar),
+                      ),
+                      TextButton(
+                          onPressed: () {}, child: const Text("Upload Photo")),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: _username,
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                            labelText: "Username"),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: _fullName,
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                            labelText: "Full Name"),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: _bio,
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                            labelText: "Bio"),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      TextFormField(
+                        controller: _phone,
+                        decoration: const InputDecoration(
+                            border: OutlineInputBorder(),
+                            contentPadding: EdgeInsets.fromLTRB(15, 0, 0, 0),
+                            labelText: "Phone"),
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      ElevatedButton(
+                        onPressed: () async {
+                          await DatabaseService(uuid: user.uuid)
+                              .createUserProfile(
+                                  userModelData.email,
+                                  _fullName.text,
+                                  _phone.text,
+                                  userModelData.avatar,
+                                  _username.text,
+                                  _bio.text);
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Update"),
+                      ),
+                      const Divider(
+                        height: 10,
+                        color: Colors.black,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: const Text("Cancel"),
+                      ),
+                    ],
+                  ),
+                );
+              } else {
+                return const Loading();
+              }
+            }),
+      ),
+    );
+  }
 }
