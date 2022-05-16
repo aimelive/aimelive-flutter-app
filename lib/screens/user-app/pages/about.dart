@@ -26,9 +26,11 @@ class _AboutPageState extends State<AboutPage> {
 
   final double coverHeight = 150;
   final double profileHeight = 140;
+  bool isUpdating = false;
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AppUser?>(context);
     void onSelected(BuildContext context, int item) async {
       switch (item) {
         case 0:
@@ -119,13 +121,26 @@ class _AboutPageState extends State<AboutPage> {
           )
         ],
       ),
-      body: ListView(children: [buildTop(top), buildContent()]),
-
-      //           const UserProfile()
+      body: StreamBuilder<DocumentSnapshot>(
+          stream: DatabaseService(uuid: user?.uuid).currentUserData,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              DocumentSnapshot? data = snapshot.data;
+              final userModelData = ActiveUser.fromJsonUser(
+                  data?.data() as Map<String, dynamic>, user!.uuid);
+              return ListView(children: [
+                //Text(userModelData.fullName),
+                buildTop(top, userModelData.avatar),
+                buildContent(userModelData.fullName)
+              ]);
+            } else {
+              return const Loading();
+            }
+          }),
     );
   }
 
-  Stack buildTop(double top) {
+  Stack buildTop(double top, String avatar) {
     final bottom = profileHeight / 2;
     return Stack(
         clipBehavior: Clip.none,
@@ -134,17 +149,17 @@ class _AboutPageState extends State<AboutPage> {
           Container(
               margin: EdgeInsets.only(bottom: bottom),
               child: buildCoverImage()),
-          Positioned(top: top, child: buildProfileImage())
+          Positioned(top: top, child: buildProfileImage(avatar))
         ]);
   }
 
-  Widget buildContent() => Container(
+  Widget buildContent(String fullName) => Container(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           children: [
-            const Text(
-              "Aime Ndayambaje",
-              style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+            Text(
+              fullName,
+              style: const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
             ),
             const SizedBox(
               height: 18,
@@ -216,7 +231,7 @@ class _AboutPageState extends State<AboutPage> {
           fit: BoxFit.cover,
         ),
       );
-  Widget buildProfileImage() => Container(
+  Widget buildProfileImage(String avatar) => Container(
         padding: const EdgeInsets.all(5),
         decoration: BoxDecoration(
           color: Colors.white,
@@ -225,7 +240,7 @@ class _AboutPageState extends State<AboutPage> {
         child: CircleAvatar(
           radius: profileHeight / 2,
           backgroundColor: Colors.grey.shade800,
-          backgroundImage: const AssetImage("assets/Rectangle 21.png"),
+          backgroundImage: NetworkImage(avatar),
         ),
       );
 
@@ -323,6 +338,9 @@ class _AboutPageState extends State<AboutPage> {
                       ),
                       ElevatedButton(
                         onPressed: () async {
+                          setState(() {
+                            isUpdating = true;
+                          });
                           await DatabaseService(uuid: user.uuid)
                               .createUserProfile(
                                   userModelData.email,
@@ -333,7 +351,11 @@ class _AboutPageState extends State<AboutPage> {
                                   _bio.text);
                           Navigator.of(context).pop();
                         },
-                        child: const Text("Update"),
+                        child: isUpdating
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text("Update"),
                       ),
                       const Divider(
                         height: 10,

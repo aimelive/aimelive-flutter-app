@@ -11,6 +11,9 @@ class DatabaseService {
   final CollectionReference messageCollection =
       FirebaseFirestore.instance.collection('messages');
 
+  final CollectionReference chatMessageCollection =
+      FirebaseFirestore.instance.collection('chat_messages');
+
   //create user profile
   Future createUserProfile(String email, String fullName, String phone,
       String avatar, String username, String bio) async {
@@ -31,8 +34,24 @@ class DatabaseService {
         .set({'name': name, 'email': email, 'message': message});
   }
 
+  Future createChatMessage(
+      String messageString, DateTime createdAt, String receiverId) async {
+    return await chatMessageCollection.doc().set({
+      'messageString': messageString,
+      'receiverId': receiverId,
+      'senderId': uuid,
+      'createdAt': createdAt
+    });
+  }
+
+//getting users
   Stream<QuerySnapshot> get userData {
     return userCollection.snapshots();
+  }
+
+//getting chat messages
+  Stream<QuerySnapshot> chatMessage(String? sender, String receiver) {
+    return chatMessageCollection.snapshots().where((event) => true);
   }
 
   //signed in user doc strean

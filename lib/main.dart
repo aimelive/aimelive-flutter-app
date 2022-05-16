@@ -1,6 +1,7 @@
 import 'package:aimelive_app/models/app_user.dart';
 import 'package:aimelive_app/screens/auth_wrapper.dart';
 import 'package:aimelive_app/services/auth.dart';
+import 'package:aimelive_app/welcome/onboarding.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
@@ -22,7 +23,7 @@ class MyApp extends StatelessWidget {
       initialData: null,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: const AuthWrapper(),
+        home: const OnBoardingPage(),
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ),

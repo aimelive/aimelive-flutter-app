@@ -1,3 +1,4 @@
+import 'package:aimelive_app/screens/user-app/pages/components/chat_card.dart';
 import 'package:aimelive_app/screens/user-app/shared/app_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:aimelive_app/models/inbox_room_messages.dart';
@@ -104,44 +105,47 @@ class _ChatsListState extends State<ChatsList> {
                                   label: "UNDO", onPressed: () {}),
                             ));
                           },
-                          child: Card(
-                            child: ListTile(
-                              leading: CircleAvatar(
-                                backgroundImage: AssetImage(
-                                    "assets/${messages[index].avatar}"),
-                                radius: 26,
-                              ),
-                              onTap: () {},
-                              title: Text(
-                                messages[index].username,
-                              ),
-                              subtitle: Text(messages[index].message),
-                              trailing: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                crossAxisAlignment: CrossAxisAlignment.end,
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 7, vertical: 3.5),
-                                    margin: const EdgeInsets.all(5),
-                                    decoration: BoxDecoration(
-                                        color: const Color(0xffecb22e),
-                                        borderRadius:
-                                            BorderRadius.circular(25)),
-                                    child: Text(
-                                      "${messages[index].length}",
-                                      style: const TextStyle(
-                                          color: Colors.white, fontSize: 12),
-                                    ),
-                                  ),
-                                  Text(
-                                    messages[index].when,
-                                    style: TextStyle(color: Colors.grey[400]),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
+                          child: ChatCard(
+                              avatar: messages[index].avatar,
+                              username: messages[index].username,
+                              message: messages[index].message,
+                              unread: messages[index].length,
+                              time: messages[index].when),
+                          // child: ListTile(
+                          //   leading: CircleAvatar(
+                          //     backgroundImage: AssetImage(
+                          //         "assets/${messages[index].avatar}"),
+                          //     radius: 26,
+                          //   ),
+                          //   onTap: () {},
+                          //   title: Text(
+                          //     messages[index].username,
+                          //   ),
+                          //   subtitle: Text(messages[index].message),
+                          //   trailing: Column(
+                          //     mainAxisAlignment: MainAxisAlignment.center,
+                          //     crossAxisAlignment: CrossAxisAlignment.end,
+                          //     children: [
+                          //       Container(
+                          //         padding: const EdgeInsets.symmetric(
+                          //             horizontal: 7, vertical: 3.5),
+                          //         margin: const EdgeInsets.all(5),
+                          //         decoration: BoxDecoration(
+                          //             color: const Color(0xffecb22e),
+                          //             borderRadius: BorderRadius.circular(25)),
+                          //         child: Text(
+                          //           "${messages[index].length}",
+                          //           style: const TextStyle(
+                          //               color: Colors.white, fontSize: 12),
+                          //         ),
+                          //       ),
+                          //       Text(
+                          //         messages[index].when,
+                          //         style: TextStyle(color: Colors.grey[400]),
+                          //       )
+                          //     ],
+                          //   ),
+                          // ),
                         );
                       },
                     ),
@@ -162,8 +166,9 @@ class _ChatsListState extends State<ChatsList> {
           itemCount: user!.docs.length,
           scrollDirection: Axis.horizontal,
           itemBuilder: (context, index) {
-            final data =
-                User.fromJson(user.docs[index].data() as Map<String, dynamic>);
+            final data = User.fromJson(
+                user.docs[index].data() as Map<String, dynamic>,
+                user.docs[index].id);
             return Container(
               margin: const EdgeInsets.only(left: 15),
               child: Column(

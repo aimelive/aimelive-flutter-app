@@ -134,31 +134,8 @@ class CommunityList extends StatefulWidget {
 }
 
 class _CommunityListState extends State<CommunityList> {
-  List<User> users = [
-    User(
-        username: "Aimelive",
-        fullName: "Aime Ndayambaje",
-        phone: "+25078983483737",
-        email: "aimelive250@gmail.com",
-        avatar: "Rectangle 21.png",
-        bio: "Flutter Enthusianist"),
-    User(
-        username: "Ryan-fab",
-        fullName: "fabrice ndacyayisenga",
-        phone: "+25078983483737",
-        email: "ryan-fab450@gmail.com",
-        avatar: "father.jpg",
-        bio: "PHP Laravel || MERN Stack"),
-    User(
-        username: "Gilbert Up",
-        fullName: "MANZI Gilbert",
-        phone: "+25078983483737",
-        email: "giulzitu459@gmail.com",
-        avatar: "software-skills.png",
-        bio: "Network Engineer"),
-  ];
-  Widget userCard(user) {
-    final data = User.fromJson(user.data() as Map<String, dynamic>);
+  Widget userCard(user, userId) {
+    final data = User.fromJson(user.data() as Map<String, dynamic>, userId);
     final assets = [Image(image: NetworkImage(data.avatar))];
     return Card(
       elevation: 1,
@@ -229,7 +206,9 @@ class _CommunityListState extends State<CommunityList> {
     final user = Provider.of<QuerySnapshot?>(context);
     if (user?.docs != null) {
       return Column(
-        children: user!.docs.map((userData) => userCard(userData)).toList(),
+        children: user!.docs
+            .map((userData) => userCard(userData, userData.id))
+            .toList(),
       );
     }
     return Column();
