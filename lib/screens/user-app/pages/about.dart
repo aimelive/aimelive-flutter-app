@@ -1,6 +1,6 @@
 import 'package:aimelive_app/models/app_user.dart';
 import 'package:aimelive_app/screens/home.dart';
-import 'package:aimelive_app/screens/user-app/pages/community.dart';
+import 'package:aimelive_app/screens/user-app/pages/components/community_list.dart';
 import 'package:aimelive_app/services/auth.dart';
 import 'package:aimelive_app/services/database.dart';
 import 'package:aimelive_app/shared/loading.dart';

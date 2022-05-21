@@ -157,7 +157,6 @@ class _InboxChatsState extends State<InboxChats> {
         ],
       ),
       body: Column(
-        //crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: Padding(

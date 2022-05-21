@@ -7,7 +7,11 @@ class NotificationApi {
     return const NotificationDetails(
       android: AndroidNotificationDetails('channel id', 'channel name',
           importance: Importance.max),
-      iOS: IOSNotificationDetails(),
+      iOS: IOSNotificationDetails(
+          presentAlert: true,
+          presentBadge: true,
+          presentSound: true,
+          subtitle: "High Gang"),
     );
   }
 

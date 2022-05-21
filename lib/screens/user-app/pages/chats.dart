@@ -91,9 +91,9 @@ class _ChatsListState extends State<ChatsList> {
                       itemCount: messages.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Dismissible(
-                          background: Container(
-                            color: Colors.grey[300],
-                          ),
+                          background: buildSwipeActionLeft(),
+                          secondaryBackground: buildSwipeActionRight(),
+                          //direction: DismissDirection.startToEnd,
                           key: ValueKey<Message>(messages[index]),
                           onDismissed: (DismissDirection direction) {
                             setState(() {
@@ -111,41 +111,6 @@ class _ChatsListState extends State<ChatsList> {
                               message: messages[index].message,
                               unread: messages[index].length,
                               time: messages[index].when),
-                          // child: ListTile(
-                          //   leading: CircleAvatar(
-                          //     backgroundImage: AssetImage(
-                          //         "assets/${messages[index].avatar}"),
-                          //     radius: 26,
-                          //   ),
-                          //   onTap: () {},
-                          //   title: Text(
-                          //     messages[index].username,
-                          //   ),
-                          //   subtitle: Text(messages[index].message),
-                          //   trailing: Column(
-                          //     mainAxisAlignment: MainAxisAlignment.center,
-                          //     crossAxisAlignment: CrossAxisAlignment.end,
-                          //     children: [
-                          //       Container(
-                          //         padding: const EdgeInsets.symmetric(
-                          //             horizontal: 7, vertical: 3.5),
-                          //         margin: const EdgeInsets.all(5),
-                          //         decoration: BoxDecoration(
-                          //             color: const Color(0xffecb22e),
-                          //             borderRadius: BorderRadius.circular(25)),
-                          //         child: Text(
-                          //           "${messages[index].length}",
-                          //           style: const TextStyle(
-                          //               color: Colors.white, fontSize: 12),
-                          //         ),
-                          //       ),
-                          //       Text(
-                          //         messages[index].when,
-                          //         style: TextStyle(color: Colors.grey[400]),
-                          //       )
-                          //     ],
-                          //   ),
-                          // ),
                         );
                       },
                     ),
@@ -155,6 +120,32 @@ class _ChatsListState extends State<ChatsList> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Widget buildSwipeActionLeft() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      alignment: Alignment.centerLeft,
+      color: Colors.grey[200],
+      child: const Icon(
+        Icons.archive_sharp,
+        color: Color(0xffecb22e),
+        size: 32,
+      ),
+    );
+  }
+
+  Widget buildSwipeActionRight() {
+    return Container(
+      padding: const EdgeInsets.symmetric(horizontal: 20),
+      alignment: Alignment.centerRight,
+      color: Colors.grey[200],
+      child: const Icon(
+        Icons.delete_forever,
+        color: Colors.red,
+        size: 32,
       ),
     );
   }

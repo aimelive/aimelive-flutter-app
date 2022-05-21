@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ChatCard extends StatefulWidget {
-  String avatar;
-  String username;
-  String message;
-  int unread;
-  String time;
-  ChatCard(
+  final String avatar;
+  final String username;
+  final String message;
+  final int unread;
+  final String time;
+  const ChatCard(
       {required this.avatar,
       required this.username,
       required this.message,

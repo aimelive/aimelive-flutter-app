@@ -50,8 +50,8 @@ class DatabaseService {
   }
 
 //getting chat messages
-  Stream<QuerySnapshot> chatMessage(String? sender, String receiver) {
-    return chatMessageCollection.snapshots().where((event) => true);
+  Stream<QuerySnapshot> chatMessage(String? sender, String? receiver) {
+    return chatMessageCollection.snapshots();
   }
 
   //signed in user doc strean

@@ -1,5 +1,4 @@
-//import 'package:aimelive_app/api/notification_api.dart';
-import 'package:aimelive_app/screens/user-app/pages/community.dart';
+import 'package:aimelive_app/screens/user-app/pages/components/community_list.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -34,8 +33,12 @@ class _UserHomeState extends State<UserHome> {
             pinned: true,
             elevation: 0.0,
             floating: true,
-            backgroundColor: Colors.grey,
+            shape: ContinuousRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(bottom: Radius.circular(30.0))),
+            backgroundColor: Color(0xffecb22e),
             expandedHeight: 210.0,
+            //leading: null,
             flexibleSpace: FlexibleSpaceBar(
               background: MyFlexiableAppBar(),
             ),
@@ -43,13 +46,6 @@ class _UserHomeState extends State<UserHome> {
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                // ElevatedButton(
-                //     onPressed: () => NotificationApi.showNotification(
-                //         title: "Aime Ndayambaje",
-                //         body:
-                //             "Hi, This is Aimelive. I am a freelance junior developer.",
-                //         payload: "aime.live"),
-                //     child: const Text("Push Notifications")),
                 const SizedBox(
                   height: 10,
                 ),
@@ -82,7 +78,6 @@ class _UserHomeState extends State<UserHome> {
                     buildIndicator()
                   ],
                 ),
-
                 const Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Text(
@@ -243,8 +238,8 @@ class MyFlexiableAppBar extends StatelessWidget {
         ],
       )),
       decoration: const BoxDecoration(
-        color: Colors.grey,
-      ),
+          color: Colors.grey,
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(25))),
     );
   }
 }

@@ -1,5 +1,4 @@
 import 'package:aimelive_app/models/app_user.dart';
-import 'package:aimelive_app/screens/auth_wrapper.dart';
 import 'package:aimelive_app/services/auth.dart';
 import 'package:aimelive_app/welcome/onboarding.dart';
 import 'package:flutter/material.dart';
