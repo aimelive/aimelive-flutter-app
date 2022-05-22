@@ -1,6 +1,7 @@
 import 'package:aimelive_app/screens/user-app/pages/components/projects-hire/categories.dart';
+import 'package:aimelive_app/screens/user-app/pages/components/projects-hire/constants.dart';
 import 'package:aimelive_app/screens/user-app/pages/components/projects-hire/project_template.dart';
-import 'package:aimelive_app/screens/user-app/shared/app_bar.dart';
+import 'package:aimelive_app/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class ProjectsHire extends StatefulWidget {
@@ -33,7 +34,6 @@ class _ProjectsHireState extends State<ProjectsHire> {
     final Size size = MediaQuery.of(context).size;
     final double categoryHeight = size.height * 0.30;
     return Scaffold(
-      appBar: myCustomAppBar("Hire Me") as PreferredSizeWidget,
       body: SizedBox(
         height: size.height,
         child: Column(
@@ -41,17 +41,47 @@ class _ProjectsHireState extends State<ProjectsHire> {
             ClipPath(
               clipper: CustomClipPath(),
               child: Container(
-                color: const Color(0xffecb22e),
-                child: const Center(
-                  child: Text(
-                    "EXPLORE MY WORKS",
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18),
-                  ),
+                decoration: const BoxDecoration(
+                    color: themePrimaryColor,
+                    borderRadius:
+                        BorderRadius.vertical(bottom: Radius.circular(5))),
+                child: Column(
+                  children: [
+                    const SizedBox(
+                      height: 40,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: const [
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Icon(
+                            Icons.menu,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(8.0),
+                          child: Text(
+                            'Aimelive App',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Poppins',
+                                fontSize: 20.0),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(16.0),
+                          child: Icon(
+                            Icons.person_outline,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-                height: 100,
+                height: 120,
               ),
             ),
             AnimatedOpacity(
@@ -69,8 +99,9 @@ class _ProjectsHireState extends State<ProjectsHire> {
                 padding: const EdgeInsets.all(8.0),
                 child: ListView.builder(
                   controller: controller,
-                  itemCount: 5,
-                  itemBuilder: (context, index) => const ProjectTemplate(),
+                  itemCount: projects.length,
+                  itemBuilder: (context, index) =>
+                      ProjectTemplate(project: projects[index]),
                 ),
               ),
             ),

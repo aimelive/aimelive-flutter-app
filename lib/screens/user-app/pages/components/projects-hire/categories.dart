@@ -1,3 +1,4 @@
+import 'package:aimelive_app/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class CategoriesScroller extends StatelessWidget {
@@ -41,8 +42,18 @@ class CategoriesScroller extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "20 Items",
+                        "20 Projects",
                         style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: padding,
+                      ),
+                      Center(
+                        child: Icon(
+                          Icons.favorite,
+                          color: themeWhiteColor,
+                          size: 50,
+                        ),
                       ),
                     ],
                   ),
@@ -72,8 +83,18 @@ class CategoriesScroller extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "20 Items",
+                        "32 Projects\n",
                         style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: padding,
+                      ),
+                      Center(
+                        child: Icon(
+                          Icons.trending_down,
+                          color: themeWhiteColor,
+                          size: 50,
+                        ),
                       ),
                     ],
                   ),
@@ -93,7 +114,7 @@ class CategoriesScroller extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: const [
                       Text(
-                        "Super\nSaving",
+                        "Super\nHiring",
                         style: TextStyle(
                             fontSize: 25,
                             color: Colors.white,
@@ -103,8 +124,18 @@ class CategoriesScroller extends StatelessWidget {
                         height: 10,
                       ),
                       Text(
-                        "20 Items",
+                        "5 Projects",
                         style: TextStyle(fontSize: 16, color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: padding,
+                      ),
+                      Center(
+                        child: Icon(
+                          Icons.people,
+                          color: themeWhiteColor,
+                          size: 50,
+                        ),
                       ),
                     ],
                   ),

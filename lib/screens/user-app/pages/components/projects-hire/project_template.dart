@@ -1,9 +1,11 @@
+import 'package:aimelive_app/models/project_model.dart';
+import 'package:aimelive_app/screens/user-app/pages/components/projects-hire/project_more.dart';
+import 'package:aimelive_app/shared/constants.dart';
 import 'package:flutter/material.dart';
 
 class ProjectTemplate extends StatelessWidget {
-  const ProjectTemplate({
-    Key? key,
-  }) : super(key: key);
+  final Project project;
+  const ProjectTemplate({Key? key, required this.project}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -12,14 +14,28 @@ class ProjectTemplate extends StatelessWidget {
       child: Card(
         shadowColor: const Color(0xfff2f2f2),
         elevation: 20,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Column(
             children: [
+              ListTile(
+                leading: const CircleAvatar(
+                  backgroundColor: themePrimaryColor,
+                  backgroundImage: AssetImage('assets/Rectangle 21.png'),
+                ),
+                title: Text(project.author),
+                subtitle: const Text("Flutter Developer"),
+                trailing: IconButton(
+                  onPressed: () {},
+                  icon: const Icon(Icons.more_vert),
+                ),
+              ),
+              Image.asset("assets/${project.featurePhoto}"),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Text(
-                  "AIMELIVE PORTFOLIO APP",
+                  project.title,
                   style: TextStyle(
                       fontWeight: FontWeight.w800,
                       fontSize: 18,
@@ -27,87 +43,71 @@ class ProjectTemplate extends StatelessWidget {
                       color: Colors.amber.shade400),
                 ),
               ),
-              Image.asset("assets/software-skills.png"),
-              const Padding(
-                padding: EdgeInsets.all(10.0),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
                 child: Text(
-                  "` My first flutter application done for facilitating all of my customers. It is made of Dart language and Flutter framework for mobile applications. `",
-                  style: TextStyle(
+                  project.description,
+                  style: const TextStyle(
                       fontWeight: FontWeight.w300,
                       fontSize: 18,
                       letterSpacing: 0.8),
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text(
-                  "FEATURES",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w800,
-                      fontSize: 18,
-                      letterSpacing: 0.8),
-                ),
-              ),
-              const Padding(
-                padding: EdgeInsets.all(10.0),
-                child: Text(
-                  "User can chat directly with Admin, Video call and Voice chat, External direct link to LinkedIn Account of an admin, Social Media Links, Live Chat with community around. Easily to hire an admin, read blogs and quotes, Feedback form, Login feature, Sign up with Google, Cool animations and UI. ",
-                  style: TextStyle(
-                      fontWeight: FontWeight.w300,
-                      fontSize: 18,
-                      letterSpacing: 0.8),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: padding),
+                child: Divider(
+                  color: themeLightGrey?.withOpacity(0.6),
                 ),
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    margin: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: const Color(0xffbbbbbb),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Text(
-                      "Flutter",
-                      style: TextStyle(color: Colors.white),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      primary: themePrimaryColor,
+                      elevation: 0.0,
+                      shadowColor: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7.2)),
                     ),
+                    child: const Text("Hire"),
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    margin: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: const Color(0xffbbbbbb),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Text(
-                      "Firebase",
-                      style: TextStyle(color: Colors.white),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      primary: themePrimaryColor,
+                      elevation: 0.0,
+                      shadowColor: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(7.2),
+                      ),
                     ),
+                    child: const Text("Creator"),
                   ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    margin: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: const Color(0xffbbbbbb),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Text(
-                      "UI/UX",
-                      style: TextStyle(color: Colors.white),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => ProjectDetails(project: project),
+                        ),
+                      );
+                    },
+                    style: ElevatedButton.styleFrom(
+                      primary: themePrimaryColor,
+                      elevation: 0.0,
+                      shadowColor: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 25, vertical: 10),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(7.2)),
                     ),
-                  ),
-                  Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                    margin: const EdgeInsets.all(5),
-                    decoration: BoxDecoration(
-                        color: const Color(0xffbbbbbb),
-                        borderRadius: BorderRadius.circular(5)),
-                    child: const Text(
-                      "Node JS",
-                      style: TextStyle(color: Colors.white),
-                    ),
+                    child: const Text("More"),
                   ),
                 ],
               ),
