@@ -1,5 +1,6 @@
 import 'package:aimelive_app/screens/authenticate/authenticate.dart';
 import 'package:aimelive_app/screens/contact.dart';
+import 'package:aimelive_app/screens/feedback.dart';
 import 'package:flutter/material.dart';
 import 'package:aimelive_app/screens/blogs/blogs_page.dart';
 
@@ -221,14 +222,26 @@ class SideDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.border_color),
-            title: const Text('Contact'),
+            leading: const Icon(Icons.map),
+            title: const Text('About'),
             onTap: () => {
               Navigator.of(context).pop(),
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => const ContactPage(),
+                    builder: (_) => ContactPageMap(),
+                  ))
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.border_color),
+            title: const Text('Feedback'),
+            onTap: () => {
+              Navigator.of(context).pop(),
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => const FeedbackPage(),
                   ))
             },
           ),

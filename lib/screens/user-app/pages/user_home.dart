@@ -239,7 +239,7 @@ class MyFlexiableAppBar extends StatelessWidget {
       )),
       decoration: const BoxDecoration(
           color: Colors.grey,
-          borderRadius: BorderRadius.vertical(bottom: Radius.circular(25))),
+          borderRadius: BorderRadius.vertical(bottom: Radius.circular(13.5))),
     );
   }
 }

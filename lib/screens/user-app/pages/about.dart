@@ -283,10 +283,25 @@ class _AboutPageState extends State<AboutPage> {
                       color: Colors.white,
                       borderRadius:
                           BorderRadius.vertical(top: Radius.circular(25))),
-                  padding: const EdgeInsets.all(16),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8.0),
                   child: ListView(
                     controller: controller,
                     children: [
+                      Column(
+                        children: [
+                          Container(
+                            width: 30,
+                            height: 5,
+                            decoration: BoxDecoration(
+                                color: Colors.grey[300],
+                                borderRadius: BorderRadius.circular(12)),
+                          ),
+                          const SizedBox(
+                            height: 8.0,
+                          )
+                        ],
+                      ),
                       CircleAvatar(
                         radius: 40,
                         backgroundImage: NetworkImage(userModelData.avatar),
