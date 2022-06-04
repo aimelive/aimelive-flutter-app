@@ -26,12 +26,6 @@ class _BlogsPageState extends State<BlogsPage> {
             const Text('Recent Blogs🎉🪄'),
           ],
         ),
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(Icons.arrow_back_ios),
-        ),
         centerTitle: false,
         foregroundColor: Colors.white,
         elevation: 0.0,

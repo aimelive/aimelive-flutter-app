@@ -7,6 +7,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 
 class ContactPageMap extends StatefulWidget {
+  final bool showBack;
+  const ContactPageMap(this.showBack);
   @override
   _ContactPageMapState createState() => _ContactPageMapState();
 }
@@ -79,34 +81,36 @@ class _ContactPageMapState extends State<ContactPageMap> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                InkWell(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Container(
-                    padding: const EdgeInsets.fromLTRB(24.0, 18.0, 24.0, 18.0),
-                    child: const Icon(
-                      Icons.arrow_back,
-                      size: 16,
-                    ),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(24.0),
-                      boxShadow: const [
-                        BoxShadow(
-                            color: Color.fromRGBO(0, 0, 0, .25),
-                            blurRadius: 16.0)
-                      ],
+                if (widget.showBack)
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: Container(
+                      padding:
+                          const EdgeInsets.fromLTRB(24.0, 18.0, 24.0, 18.0),
+                      child: const Icon(
+                        Icons.arrow_back,
+                        size: 16,
+                      ),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(24.0),
+                        boxShadow: const [
+                          BoxShadow(
+                              color: Color.fromRGBO(0, 0, 0, .25),
+                              blurRadius: 16.0)
+                        ],
+                      ),
                     ),
                   ),
-                ),
                 const SizedBox(
                   width: 10,
                 ),
                 Container(
                   padding: const EdgeInsets.fromLTRB(24.0, 18.0, 24.0, 18.0),
                   child: const Text(
-                    "About Aimelive",
+                    "Aimelive App",
                     style: TextStyle(fontWeight: FontWeight.w500),
                   ),
                   decoration: BoxDecoration(

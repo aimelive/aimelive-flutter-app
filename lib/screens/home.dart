@@ -229,7 +229,7 @@ class SideDrawer extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (_) => ContactPageMap(),
+                    builder: (_) => const ContactPageMap(true),
                   ))
             },
           ),

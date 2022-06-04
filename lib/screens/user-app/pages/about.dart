@@ -1,5 +1,6 @@
 import 'package:aimelive_app/models/app_user.dart';
 import 'package:aimelive_app/screens/home.dart';
+import 'package:aimelive_app/screens/navigation_drawer.dart';
 import 'package:aimelive_app/screens/user-app/pages/components/community_list.dart';
 import 'package:aimelive_app/services/auth.dart';
 import 'package:aimelive_app/services/database.dart';
@@ -67,7 +68,7 @@ class _AboutPageState extends State<AboutPage> {
         backgroundColor: Colors.grey,
         foregroundColor: Colors.white,
         elevation: 0.0,
-        leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+        leading: const MenuWidget(),
         actions: [
           Theme(
             data: Theme.of(context).copyWith(

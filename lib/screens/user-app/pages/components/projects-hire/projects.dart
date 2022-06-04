@@ -1,3 +1,4 @@
+import 'package:aimelive_app/screens/navigation_drawer.dart';
 import 'package:aimelive_app/screens/user-app/pages/components/projects-hire/categories.dart';
 import 'package:aimelive_app/screens/user-app/pages/components/projects-hire/constants.dart';
 import 'package:aimelive_app/screens/user-app/pages/components/projects-hire/project_template.dart';
@@ -55,10 +56,7 @@ class _ProjectsHireState extends State<ProjectsHire> {
                       children: const [
                         Padding(
                           padding: EdgeInsets.all(8.0),
-                          child: Icon(
-                            Icons.menu,
-                            color: Colors.white,
-                          ),
+                          child: MenuWidget(),
                         ),
                         Padding(
                           padding: EdgeInsets.all(8.0),

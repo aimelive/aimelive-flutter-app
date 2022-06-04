@@ -1,3 +1,4 @@
+import 'package:aimelive_app/screens/navigation_drawer.dart';
 import 'package:flutter/material.dart';
 
 Widget myCustomAppBar(String title) => AppBar(
@@ -16,7 +17,7 @@ Widget myCustomAppBar(String title) => AppBar(
       backgroundColor: Colors.grey,
       foregroundColor: Colors.white,
       elevation: 0.0,
-      leading: IconButton(onPressed: () {}, icon: const Icon(Icons.menu)),
+      leading: const MenuWidget(),
       actions: const [
         Icon(Icons.more_vert),
         SizedBox(

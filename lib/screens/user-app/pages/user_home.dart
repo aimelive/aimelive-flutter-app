@@ -1,3 +1,4 @@
+import 'package:aimelive_app/screens/navigation_drawer.dart';
 import 'package:aimelive_app/screens/user-app/pages/components/community_list.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -134,10 +135,7 @@ class MyAppBar extends StatelessWidget {
       children: const [
         Padding(
           padding: EdgeInsets.all(8.0),
-          child: Icon(
-            Icons.menu,
-            color: Colors.white,
-          ),
+          child: MenuWidget(),
         ),
         Padding(
           padding: EdgeInsets.all(8.0),
