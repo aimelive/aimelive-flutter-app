@@ -277,6 +277,7 @@ class _AboutPageState extends State<AboutPage> {
                     TextEditingController(text: userModelData.bio);
                 final TextEditingController _phone =
                     TextEditingController(text: userModelData.phone);
+                String role = "user";
 
                 //print(userModelData.email);
                 return Container(
@@ -364,7 +365,8 @@ class _AboutPageState extends State<AboutPage> {
                                   _phone.text,
                                   userModelData.avatar,
                                   _username.text,
-                                  _bio.text);
+                                  _bio.text,
+                                  role);
                           Navigator.of(context).pop();
                         },
                         child: isUpdating

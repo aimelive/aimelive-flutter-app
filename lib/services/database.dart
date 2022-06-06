@@ -16,14 +16,15 @@ class DatabaseService {
 
   //create user profile
   Future createUserProfile(String email, String fullName, String phone,
-      String avatar, String username, String bio) async {
+      String avatar, String username, String bio, String role) async {
     return await userCollection.doc(uuid).set({
       'email': email,
       'fullName': fullName,
       'username': username,
       'avatar': avatar,
       'bio': bio,
-      'phone': phone
+      'phone': phone,
+      'role': role
     });
   }
 

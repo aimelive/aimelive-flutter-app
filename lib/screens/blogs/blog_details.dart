@@ -1,4 +1,6 @@
 import 'package:aimelive_app/models/blog_model.dart';
+import 'package:aimelive_app/models/explore_tags_blog.dart';
+import 'package:aimelive_app/shared/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:swipe_image_gallery/swipe_image_gallery.dart';
@@ -18,6 +20,26 @@ class _BlogDetailsState extends State<BlogDetails> {
     final assets = [
       Image(image: AssetImage('assets/${widget.blog.image}')),
     ];
+    Widget tagsWidget(List<ExploreTagsBlog> tags) {
+      return Row(
+        children: tags
+            .map(
+              (tag) => Container(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 4.7, horizontal: 6.0),
+                margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                decoration: const BoxDecoration(
+                    color: themePrimaryColor,
+                    borderRadius: BorderRadius.all(Radius.circular(5))),
+                child: Text(
+                  tag.tag,
+                  style: const TextStyle(color: themeWhiteColor, fontSize: 11),
+                ),
+              ),
+            )
+            .toList(),
+      );
+    }
 
     return WillPopScope(
       onWillPop: () async {
@@ -98,6 +120,8 @@ class _BlogDetailsState extends State<BlogDetails> {
                     fontSize: 18,
                   ),
                 ),
+                const SizedBox(height: 10.0),
+                tagsWidget(widget.blog.tags),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(5, 12, 0, 12),
                   child: Row(
@@ -114,7 +138,7 @@ class _BlogDetailsState extends State<BlogDetails> {
                       ),
                     ],
                   ),
-                )
+                ),
               ],
             ),
           ),

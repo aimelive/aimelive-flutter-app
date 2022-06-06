@@ -62,34 +62,31 @@ class ProjectTemplate extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  ElevatedButton(
+                  IconButton(
                     onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      primary: themePrimaryColor,
-                      elevation: 0.0,
-                      shadowColor: Colors.transparent,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.2)),
+                    icon: const Icon(
+                      Icons.star_border_purple500,
+                      color: themeGrey,
                     ),
-                    child: const Text("Hire"),
                   ),
-                  ElevatedButton(
+                  Container(
+                    color: themeGrey.withOpacity(0.4),
+                    height: 40.0,
+                    width: 0.6,
+                  ),
+                  IconButton(
                     onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      primary: themePrimaryColor,
-                      elevation: 0.0,
-                      shadowColor: Colors.transparent,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 25, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(7.2),
-                      ),
+                    icon: const Icon(
+                      Icons.mic_external_off,
+                      color: themeGrey,
                     ),
-                    child: const Text("Creator"),
                   ),
-                  ElevatedButton(
+                  Container(
+                    color: themeGrey.withOpacity(0.4),
+                    height: 40.0,
+                    width: 0.6,
+                  ),
+                  IconButton(
                     onPressed: () {
                       Navigator.push(
                         context,
@@ -98,16 +95,10 @@ class ProjectTemplate extends StatelessWidget {
                         ),
                       );
                     },
-                    style: ElevatedButton.styleFrom(
-                      primary: themePrimaryColor,
-                      elevation: 0.0,
-                      shadowColor: Colors.transparent,
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 25, vertical: 10),
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(7.2)),
+                    icon: const Icon(
+                      Icons.arrow_circle_right_outlined,
+                      color: themeGrey,
                     ),
-                    child: const Text("More"),
                   ),
                 ],
               ),

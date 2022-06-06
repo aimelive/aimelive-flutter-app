@@ -26,6 +26,7 @@ class _SignUpState extends State<SignUp> {
   final pwd = TextEditingController();
   final confirmPwd = TextEditingController();
   final bio = TextEditingController();
+  final String role = "user";
 
   bool isCompleted = false;
   bool isHidden = true;
@@ -101,7 +102,8 @@ class _SignUpState extends State<SignUp> {
                                   phone.text,
                                   _avatar,
                                   username.text,
-                                  bio.text);
+                                  bio.text,
+                                  role);
                           if (result == null) {
                             setState(() {
                               isLoading = false;

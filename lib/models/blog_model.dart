@@ -1,3 +1,5 @@
+import 'package:aimelive_app/models/explore_tags_blog.dart';
+
 class Blog {
   String id;
   String title;
@@ -6,6 +8,7 @@ class Blog {
   String body;
   String author;
   String category;
+  List<ExploreTagsBlog> tags;
 
   Blog(
       {required this.id,
@@ -14,5 +17,6 @@ class Blog {
       required this.image,
       required this.body,
       required this.author,
-      required this.category});
+      required this.category,
+      required this.tags});
 }

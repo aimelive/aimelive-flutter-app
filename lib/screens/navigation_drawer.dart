@@ -1,11 +1,16 @@
+import 'package:aimelive_app/models/app_user.dart';
 import 'package:aimelive_app/screens/blogs/blogs_page.dart';
 import 'package:aimelive_app/screens/contact.dart';
 import 'package:aimelive_app/screens/feedback.dart';
+import 'package:aimelive_app/screens/user-app/admin/dashboard.dart';
 import 'package:aimelive_app/screens/user-app/screen_wrapper.dart';
+import 'package:aimelive_app/services/database.dart';
 import 'package:aimelive_app/shared/constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_zoom_drawer/config.dart';
 import 'package:flutter_zoom_drawer/flutter_zoom_drawer.dart';
+import 'package:provider/provider.dart';
 
 class NavigationDrawer extends StatefulWidget {
   const NavigationDrawer({Key? key}) : super(key: key);
@@ -81,6 +86,7 @@ class MenuPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = Provider.of<AppUser?>(context);
     Widget buildMenuItem(MenuItem item) => ListTileTheme(
           selectedColor: Colors.white,
           child: ListTile(
@@ -96,17 +102,39 @@ class MenuPage extends StatelessWidget {
       data: ThemeData.dark(),
       child: Scaffold(
         backgroundColor: themeGrey.withOpacity(0.0),
-        body: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Spacer(
-              flex: 1,
-            ),
-            ...MenuItems.all.map(buildMenuItem).toList(),
-            const Spacer(
-              flex: 2,
-            ),
-          ],
+        body: StreamBuilder<DocumentSnapshot>(
+          stream: DatabaseService(uuid: user?.uuid).currentUserData,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              final userInfo = ActiveUser.fromJsonUser(
+                  snapshot.data?.data() as Map<String, dynamic>, user!.uuid);
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const Spacer(
+                    flex: 1,
+                  ),
+                  ...MenuItems.all.map(buildMenuItem).toList(),
+                  if (userInfo.role == "admin")
+                    ListTile(
+                      title: const Text("Dashboard"),
+                      leading: const Icon(Icons.dashboard),
+                      onTap: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (_) => const Dashboard()));
+                      },
+                    ),
+                  const Spacer(
+                    flex: 2,
+                  ),
+                ],
+              );
+            } else {
+              return const Text("Oops! Sorry, We couldn't get User Info.");
+            }
+          },
         ),
       ),
     );
