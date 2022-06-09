@@ -11,14 +11,94 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Admin Panel"),
-        elevation: 0.0,
-        backgroundColor: themeGrey,
-      ),
-      body: const Center(
-        child: Text("On Our Way To Build Admin Panel"),
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: themeWhiteColor,
+        appBar: AppBar(
+          title: const Text("Admin Panel"),
+          centerTitle: true,
+          elevation: 0.0,
+          backgroundColor: themeWhiteColor,
+          foregroundColor: themeGrey,
+          actions: const [
+            Icon(
+              Icons.search,
+              size: 28.0,
+              color: themePrimaryColor,
+            ),
+            SizedBox(
+              width: 10.0,
+            ),
+            Icon(Icons.notifications),
+            SizedBox(
+              width: 20.0,
+            )
+          ],
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Icon(
+                      Icons.home,
+                      color: black,
+                    ),
+                    Text(
+                      "Posts",
+                      style: TextStyle(color: black),
+                    ),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Icon(
+                      Icons.trending_up,
+                      color: black,
+                    ),
+                    Text(
+                      "Projects",
+                      style: TextStyle(color: black),
+                    ),
+                  ],
+                ),
+              ),
+              Tab(
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: const [
+                    Icon(
+                      Icons.person,
+                      color: black,
+                    ),
+                    Text(
+                      "Users",
+                      style: TextStyle(color: black),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: TabBarView(children: [
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: const Text("Posts Over the AApp"),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: const Text("Projects"),
+          ),
+          Container(
+            padding: const EdgeInsets.all(8.0),
+            child: const Text("Users - Community"),
+          ),
+        ]),
       ),
     );
   }
