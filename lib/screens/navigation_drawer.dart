@@ -135,7 +135,15 @@ class MenuPage extends StatelessWidget {
               return Column(
                 children: const [
                   Spacer(),
-                  Text("Oops! Sorry, We couldn't get User Info."),
+                  Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Text(
+                      "Oops! Sorry, We couldn't get User Info.",
+                      style: TextStyle(
+                        fontSize: 18,
+                      ),
+                    ),
+                  ),
                   Spacer()
                 ],
               );
