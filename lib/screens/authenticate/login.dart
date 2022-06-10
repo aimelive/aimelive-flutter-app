@@ -209,11 +209,18 @@ class _LoginPaageState extends State<LoginPage> {
                                         message = "Login Successfully";
                                         isLoading = false;
                                       });
-                                      Navigator.pushReplacement(
+                                      // Navigator.pushReplacement(
+                                      //   context,
+                                      //   MaterialPageRoute(
+                                      //     builder: (_) => const ScreenWrapper(),
+                                      //   ),
+                                      // );
+                                      Navigator.pushAndRemoveUntil(
                                           context,
                                           MaterialPageRoute(
                                               builder: ((context) =>
-                                                  const ScreenWrapper())));
+                                                  const ScreenWrapper())),
+                                          (route) => false);
                                     }
                                   }
                                 },

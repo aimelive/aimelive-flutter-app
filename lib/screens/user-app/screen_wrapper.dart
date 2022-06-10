@@ -1,7 +1,7 @@
 import 'package:aimelive_app/screens/user-app/pages/about.dart';
 import 'package:aimelive_app/screens/user-app/pages/chats.dart';
 import 'package:aimelive_app/screens/user-app/pages/community.dart';
-import 'package:aimelive_app/screens/user-app/pages/hire_me.dart';
+import 'package:aimelive_app/screens/user-app/pages/components/projects-hire/projects.dart';
 import 'package:aimelive_app/screens/user-app/pages/user_home.dart';
 import 'package:aimelive_app/services/database.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -42,14 +42,26 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
 
   int index = 2;
   final navigationKey = GlobalKey<CurvedNavigationBarState>();
+  PageController pageViewController = PageController();
 
   final screens = [
     const ChatsList(),
     const Commmunity(),
     const UserHome(),
-    const HireMe(),
+    ProjectsHire(),
     const AboutPage(),
   ];
+  @override
+  void initState() {
+    super.initState();
+    pageViewController = PageController(initialPage: 2);
+  }
+
+  @override
+  void dispose() {
+    pageViewController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +70,22 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
       initialData: null,
       child: Scaffold(
         extendBody: true,
-        body: screens[index],
+        body: PageView(
+          controller: pageViewController,
+          onPageChanged: (value) {
+            setState(() {
+              index = value;
+            });
+          },
+          children: [
+            const ChatsList(),
+            const Commmunity(),
+            const UserHome(),
+            ProjectsHire(),
+            const AboutPage(),
+          ],
+        ),
+        //body: screens[index],
         bottomNavigationBar: Theme(
           data: Theme.of(context)
               .copyWith(iconTheme: const IconThemeData(color: Colors.white)),
@@ -73,6 +100,7 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
             animationDuration: const Duration(milliseconds: 500),
             onTap: (index) {
               setState(() {
+                pageViewController.jumpToPage(index);
                 this.index = index;
               });
             },

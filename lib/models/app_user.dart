@@ -12,6 +12,7 @@ class ActiveUser {
   String email;
   String avatar;
   String bio;
+  String role;
   ActiveUser(
       {required this.uuid,
       required this.username,
@@ -19,15 +20,18 @@ class ActiveUser {
       required this.phone,
       required this.email,
       required this.avatar,
-      required this.bio});
+      required this.bio,
+      required this.role});
 
   static ActiveUser fromJsonUser(Map<String, dynamic> json, String id) =>
       ActiveUser(
-          uuid: id,
-          username: json['username'],
-          fullName: json['fullName'],
-          phone: json['phone'],
-          email: json['email'],
-          avatar: json['avatar'],
-          bio: json['bio']);
+        uuid: id,
+        username: json['username'],
+        fullName: json['fullName'],
+        phone: json['phone'],
+        email: json['email'],
+        avatar: json['avatar'],
+        bio: json['bio'],
+        role: json['role'],
+      );
 }

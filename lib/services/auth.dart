@@ -36,15 +36,16 @@ class AuthService {
       String phone,
       String avatar,
       String username,
-      String bio) async {
+      String bio,
+      String role) async {
     try {
       UserCredential response = await _auth.createUserWithEmailAndPassword(
           email: email, password: password);
       User? userCreated = response.user;
 
       //create a new document for the user with uuid
-      await DatabaseService(uuid: userCreated!.uid)
-          .createUserProfile(email, fullName, phone, avatar, username, bio);
+      await DatabaseService(uuid: userCreated!.uid).createUserProfile(
+          email, fullName, phone, avatar, username, bio, role);
       return _appUser(userCreated);
     } catch (error) {
       print(error.toString());

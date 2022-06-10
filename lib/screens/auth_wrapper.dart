@@ -1,6 +1,6 @@
 import 'package:aimelive_app/models/app_user.dart';
 import 'package:aimelive_app/screens/home.dart';
-import 'package:aimelive_app/screens/user-app/screen_wrapper.dart';
+import 'package:aimelive_app/screens/navigation_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +14,7 @@ class AuthWrapper extends StatelessWidget {
     if (user == null) {
       return const HomePage();
     } else {
-      return const ScreenWrapper();
+      return const NavigationDrawer();
     }
   }
 }
