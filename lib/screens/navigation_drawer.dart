@@ -132,7 +132,13 @@ class MenuPage extends StatelessWidget {
                 ],
               );
             } else {
-              return const Text("Oops! Sorry, We couldn't get User Info.");
+              return Column(
+                children: const [
+                  Spacer(),
+                  Text("Oops! Sorry, We couldn't get User Info."),
+                  Spacer()
+                ],
+              );
             }
           },
         ),
