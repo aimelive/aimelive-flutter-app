@@ -1,4 +1,4 @@
-# aimelive_app
+# Aimelive App
 
 Aimelive Flutter App Project.
 
@@ -16,7 +16,7 @@ This is my very first project made in flutter/dart. I called this my username Ai
 
 - Awesome UI/UX design.
 - Colors.
-- Marketplace for talents
+- Marketplace for talents.
 
 ## Technology Tools
 
