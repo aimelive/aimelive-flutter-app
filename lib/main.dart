@@ -20,6 +20,10 @@ class MyApp extends StatelessWidget {
     return StreamProvider<AppUser?>.value(
       value: AuthService().user,
       initialData: null,
+      catchError: (context, error) {
+        print('An error ocurred $error');
+        return null;
+      },
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         home: const OnBoardingPage(),
