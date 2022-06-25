@@ -1,3 +1,6 @@
+import 'package:aimelive_app/screens/user-app/admin/panels/post_panel.dart';
+import 'package:aimelive_app/screens/user-app/admin/panels/project_panel.dart';
+import 'package:aimelive_app/screens/user-app/admin/panels/user_panel.dart';
 import 'package:aimelive_app/shared/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -85,20 +88,13 @@ class _DashboardState extends State<Dashboard> {
             ],
           ),
         ),
-        body: TabBarView(children: [
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            child: const Text("Posts Over the AApp"),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            child: const Text("Projects"),
-          ),
-          Container(
-            padding: const EdgeInsets.all(8.0),
-            child: const Text("Users - Community"),
-          ),
-        ]),
+        body: const TabBarView(
+          children: [
+            PostPanel(),
+            ProjectsPanel(),
+            UserPanel(),
+          ],
+        ),
       ),
     );
   }
