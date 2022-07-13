@@ -1,3 +1,4 @@
+import 'package:aimelive_app/models/explore_tags_blog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class DatabaseService {
@@ -13,6 +14,9 @@ class DatabaseService {
 
   final CollectionReference chatMessageCollection =
       FirebaseFirestore.instance.collection('chat_messages');
+
+  final CollectionReference blogCollection =
+      FirebaseFirestore.instance.collection("blogs");
 
   //create user profile
   Future createUserProfile(String email, String fullName, String phone,
@@ -35,6 +39,7 @@ class DatabaseService {
         .set({'name': name, 'email': email, 'message': message});
   }
 
+//create chat message
   Future createChatMessage(
       String messageString, DateTime createdAt, String receiverId) async {
     return await chatMessageCollection.doc().set({
@@ -42,6 +47,28 @@ class DatabaseService {
       'receiverId': receiverId,
       'senderId': uuid,
       'createdAt': createdAt
+    });
+  }
+
+  //creating blog
+  Future createBlog(
+      String title,
+      String imgUrl,
+      String category,
+      String body,
+      String authorId,
+      int status,
+      DateTime createdAt,
+      DateTime updatedAt) async {
+    return await blogCollection.doc().set({
+      'blogTitle': title,
+      'imgUrl': imgUrl,
+      'category': category,
+      'body': body,
+      'author': authorId,
+      'status': status,
+      'createdAt': createdAt,
+      'updatedAt': updatedAt
     });
   }
 

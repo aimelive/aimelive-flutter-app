@@ -1,3 +1,4 @@
+import 'package:aimelive_app/screens/user-app/pages/components/community_list.dart';
 import 'package:flutter/material.dart';
 
 class UserPanel extends StatefulWidget {
@@ -12,7 +13,7 @@ class _UserPanelState extends State<UserPanel> {
   Widget build(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(8.0),
-      child: const Text('User Society'),
+      child: const CommunityList(),
     );
   }
 }

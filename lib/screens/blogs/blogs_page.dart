@@ -210,7 +210,7 @@ class _BlogsDisplayerState extends State<BlogsDisplayer> {
                       size: 14,
                     ),
                     Text(
-                      ' ${blog.date}',
+                      "Few minutes ago ${blog.createdAt}",
                       style: TextStyle(fontSize: 14, color: Colors.grey[500]),
                     ),
                   ],

@@ -171,7 +171,7 @@ class _InboxChatsState extends State<InboxChats> {
                           .map((doc) => ChatModel.fromJsonMessage(
                               doc.data() as Map<String, dynamic>, doc.id))
                           .toList();
-                      //print(chats.length);
+                      chats.sort((a, b) => a.createdAt.compareTo(b.createdAt));
                       return ListView.builder(
                         itemCount: chats.length,
                         itemBuilder: (context, index) => messageDisplay(
