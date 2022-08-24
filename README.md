@@ -1,4 +1,3 @@
-# Aimelive App
 
 Aimelive Flutter App Project.
 
@@ -23,3 +22,4 @@ This is my very first project made in flutter/dart. I called this my username Ai
 1. UI/UX - Flutter (Framework which uses dart language).
 2. Backend - Firebase.
 3. External Dependencies. https://github.com/aimelive/aimelive-flutter-app/blob/main/pubspec.yaml
+

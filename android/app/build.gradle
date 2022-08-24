@@ -59,6 +59,13 @@ android {
             minifyEnabled false
         }
     }
+
+    lintOptions {
+        disable 'InvalidPackage'
+        disable "Instantiatable"
+        checkReleaseBuilds false
+        abortOnError false
+    }
 }
 
 flutter {

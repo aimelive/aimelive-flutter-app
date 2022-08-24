@@ -68,6 +68,10 @@ class _ScreenWrapperState extends State<ScreenWrapper> {
     return StreamProvider<QuerySnapshot?>.value(
       value: DatabaseService(uuid: null).userData,
       initialData: null,
+      catchError: (context, error) {
+        print('An error occured $error');
+        return null;
+      },
       child: Scaffold(
         extendBody: true,
         body: PageView(

@@ -309,7 +309,10 @@ class _AboutPageState extends State<AboutPage> {
                         backgroundImage: NetworkImage(userModelData.avatar),
                       ),
                       TextButton(
-                          onPressed: () {}, child: const Text("Upload Photo")),
+                          onPressed: () {
+                            print("Upload photo button clicked");
+                          },
+                          child: const Text("Upload Photo")),
                       const SizedBox(
                         height: 10,
                       ),

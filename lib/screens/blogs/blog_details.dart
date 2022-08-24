@@ -88,7 +88,7 @@ class _BlogDetailsState extends State<BlogDetails> {
                           color: Colors.grey,
                         ),
                         Text(
-                          " ${widget.blog.date}   ",
+                          " ${widget.blog.createdAt}   ",
                           style: const TextStyle(color: Colors.grey),
                         ),
                       ],
